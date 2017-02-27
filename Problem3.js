@@ -1,8 +1,8 @@
 var isPrime = function(inputNum) {
   if (inputNum===1) {
-    returnf false;
+    return false;
   } else {
-    for (var f = 2; f*f < inputNum; f++) {
+    for (var f = 2; f*f <= inputNum; f++) {
       if (inputNum%f===0) {
         return false;
       }

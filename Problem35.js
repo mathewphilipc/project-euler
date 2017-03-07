@@ -14,24 +14,23 @@ var isPrime = function(inputNum) {
 }
 
 var numDigits = function(inputNum) {
+  var maxDigits = 8;
   if (inputNum < 0) {
-    return -1;
-  } else if (inputNum < 10) {
-    return 1;
-  } else if (inputNum < 100) {
-    return 2;
-  } else if (inputNum < 1000) {
-    return 3;
-  } else if (inputNum < 10000) {
-    return 4;
-  } else if (inputNum < 100000) {
-    return 5;
-  } else if (inputNum < 1000000) {
-    return 6;
-  } else if (inputNum < 10000000) {
-    return 7;
+    return "too few";
+  }
+  if (0 <= inputNum && inputNum < 10) {
+      return 1;
   } else {
-    return -1;
+    var output = 2;
+    var lower = 10;
+    while (output <= maxDigits) {
+      if (lower <= inputNum && inputNum < 10*lower) {
+        return output;
+      }
+      lower *= 10;
+      output++;
+    }
+    return "too many";
   }
 }
 
@@ -39,11 +38,31 @@ var numToArray = function(inputNum) {
   var len = numDigits;
   if (len===-1) {
     return "stop that right now";
+  } else {
+    var outputArray = [];
+    var currNum = inputNum;
+    var lastDigit;
+    while (currNum > 0) {
+      lastDigit = currNum%10;
+      outputArray.unshift(lastDigit);
+      currNum = (currNum - lastDigit)/10;
+    }
+    return outputArray;
   }
 }
 
-var cycle = function(inputNum) {
-  var len = numDigits(inputNum);
+var arrayToNum = function(inputArray) {
+  var currNum = 0;
+  for (var n = 0; n < inputArray.length; n) {
+    currNum = 10*currNum + inputArray[n];
+  }
+  return currNum;
+}
+
+var cycle = function(inputArray) {
+  var len = inputArray.length;
+  var temp = inputArray[0];
+  
   if (len===-1) {
     return -1;
   }
@@ -55,4 +74,5 @@ var cycle = function(inputNum) {
   }
 }
 
-console.log(numDigits(9999));
+var testArray = numToArray(243);
+console.log(testArray);
